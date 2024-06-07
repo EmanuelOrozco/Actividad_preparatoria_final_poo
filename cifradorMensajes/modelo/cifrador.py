@@ -15,20 +15,22 @@ class ReglaCifrado(ABC):
         ...
 
     def encontrar_numeros_mensaje(self, mensaje: str) -> list:
+        posicion: int = -1
         numeros_mensaje: list = []
         lista: list = list(mensaje)
         for caracter in lista:
+            posicion += 1
             if caracter.isdigit():
-                numeros_mensaje.append(caracter)
+                numeros_mensaje.append(posicion)
         return numeros_mensaje
 
     def encontrar_no_ascci_mensaje(self, mensaje: str) -> list:
         no_ascci_mensaje: list = []
-        lista: list = list(mensaje)
-        for caracter in lista:
-            if lista.ord(caracter) > 127:
-                no_ascci_mensaje.append(caracter)
+        for posicion, caracter in enumerate(mensaje):
+            if ord(caracter) > 127:
+                no_ascci_mensaje.append(posicion)
         return no_ascci_mensaje
+
 
 class ReglaCifradoTraslacion(ReglaCifrado):
     def desencriptar(self, mensaje: str) -> str:
