@@ -1,3 +1,4 @@
+import string
 from abc import abstractmethod, ABC
 
 
@@ -33,21 +34,32 @@ class ReglaCifrado(ABC):
 
 
 class ReglaCifradoTraslacion(ReglaCifrado):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, token: int):
+        super().__init__(token)
 
     def desencriptar(self, mensaje: str) -> str:
-        ...
+        if self.mensaje_valido(mensaje):
+            ...
 
-    def encriptar(self, mensaje: str) -> str:
-        ...
+
+    def encriptar(self, mensaje: str, token: int) -> str:
+        if self.mensaje_valido(mensaje):
+            alfabeto_list = [letra for letra in string.ascii_lowercase]
+            encriptado: list = []
+            for caracter in mensaje:
+                for posicion, letra in enumerate(alfabeto_list):
+                    if letra == caracter and posicion + token <= len(alfabeto_list):
+                        encriptado.append(alfabeto_list[posicion + token])
+                    elif letra == caracter:
+                        encriptado.append(alfabeto_list[(posicion + token) - len(alfabeto_list)])
+            return "".join(encriptado)
 
     def mensaje_valido(self, mensaje: str) -> bool:
         ...
 
 class ReglaCifradoNumerico(ReglaCifrado):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, token: int):
+        super().__init__(token)
 
     def encriptar(self, mensaje: str) -> str:
         ...
