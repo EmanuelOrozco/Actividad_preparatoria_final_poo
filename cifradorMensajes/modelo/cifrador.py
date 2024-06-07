@@ -42,16 +42,16 @@ class ReglaCifradoTraslacion(ReglaCifrado):
             ...
 
 
-    def encriptar(self, mensaje: str, token: int) -> str:
+    def encriptar(self, mensaje: str) -> str:
         if self.mensaje_valido(mensaje):
             alfabeto_list = [letra for letra in string.ascii_lowercase]
             encriptado: list = []
             for caracter in mensaje:
                 for posicion, letra in enumerate(alfabeto_list):
-                    if letra == caracter and posicion + token <= len(alfabeto_list):
-                        encriptado.append(alfabeto_list[posicion + token])
+                    if letra == caracter and posicion + self.token <= len(alfabeto_list):
+                        encriptado.append(alfabeto_list[posicion + self.token])
                     elif letra == caracter:
-                        encriptado.append(alfabeto_list[(posicion + token) - len(alfabeto_list)])
+                        encriptado.append(alfabeto_list[(posicion + self.token) - len(alfabeto_list)])
             return "".join(encriptado)
 
     def mensaje_valido(self, mensaje: str) -> bool:
