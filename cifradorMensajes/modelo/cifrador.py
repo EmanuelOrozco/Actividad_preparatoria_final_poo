@@ -1,7 +1,10 @@
 from abc import abstractmethod, ABC
+
+
 class ReglaCifrado(ABC):
     def __init__(self, token: int):
         self.token: int = token
+
     @abstractmethod
     def mensaje_valido(self, mensaje: str) -> bool:
         ...
@@ -15,11 +18,8 @@ class ReglaCifrado(ABC):
         ...
 
     def encontrar_numeros_mensaje(self, mensaje: str) -> list:
-        posicion: int = -1
         numeros_mensaje: list = []
-        lista: list = list(mensaje)
-        for caracter in lista:
-            posicion += 1
+        for posicion, caracter in enumerate(mensaje):
             if caracter.isdigit():
                 numeros_mensaje.append(posicion)
         return numeros_mensaje
@@ -33,6 +33,9 @@ class ReglaCifrado(ABC):
 
 
 class ReglaCifradoTraslacion(ReglaCifrado):
+    def __init__(self):
+        super().__init__()
+
     def desencriptar(self, mensaje: str) -> str:
         ...
 
@@ -43,6 +46,9 @@ class ReglaCifradoTraslacion(ReglaCifrado):
         ...
 
 class ReglaCifradoNumerico(ReglaCifrado):
+    def __init__(self):
+        super().__init__()
+
     def encriptar(self, mensaje: str) -> str:
         ...
 

@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
+
 class ErrorContenido(ABC, Exception):
-    @abstractmethod
+
     def __init__(self, detalles: str):
-        ...
+        self.detalles: str = detalles
 
 
 class ContieneNoAscci(ErrorContenido):
@@ -12,8 +13,8 @@ class ContieneNoAscci(ErrorContenido):
 
 
 class ContieneNumero(ErrorContenido):
-    ...
-
+    def __init__(self):
+        super().__init__()
 
 class ErrorFormato(ABC, Exception):
     ...
